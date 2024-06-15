@@ -38,7 +38,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "/adminDashboard",
-        element: <AdminDashboard></AdminDashboard>,
+        element: (
+          <PrivateRoute>
+            <AdminDashboard></AdminDashboard>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "/profile",
@@ -55,7 +59,7 @@ const Router = createBrowserRouter([
       {
         path: "/allUsers/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/users/${params.id}`),
+          fetch(`https://medicare-hub-server.onrender.com/users/${params.id}`),
         element: <UserDetails></UserDetails>,
       },
     ],

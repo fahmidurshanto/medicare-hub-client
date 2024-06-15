@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { RxDropdownMenu } from "react-icons/rx";
 import { AuthContext } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const isAdmin = useAdmin();
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -24,9 +26,11 @@ const Navbar = () => {
                 </li>
               </div>
             )}
-            <li>
-              <Link to="/adminDashboard">Admin Dashboard</Link>
-            </li>
+            {isAdmin && (
+              <li>
+                <Link to="/adminDashboard">Admin Dashboard</Link>
+              </li>
+            )}
           </ul>
         </details>
         <a className="btn btn-ghost text-xl font-bold">MediCare HUB</a>
@@ -43,9 +47,11 @@ const Navbar = () => {
               </li>
             </div>
           )}
-          <li>
-            <Link to="/adminDashboard">Admin Dashboard</Link>
-          </li>
+          {isAdmin && (
+            <li>
+              <Link to="/adminDashboard">Admin Dashboard</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div></div>

@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ const Register = () => {
   // districts data fetching by axios
   useEffect(() => {
     axios
-      .get("http://localhost:5000/districts")
+      .get("https://medicare-hub-server.onrender.com/districts")
       .then((res) => {
         setDistricts(res.data);
       })
@@ -26,7 +25,7 @@ const Register = () => {
   // upazilas data fetching by axios
   useEffect(() => {
     axios
-      .get("http://localhost:5000/upazilas")
+      .get("https://medicare-hub-server.onrender.com/upazilas")
       .then((res) => {
         setUpazilas(res.data);
       })
@@ -80,7 +79,7 @@ const Register = () => {
     console.log(newUser);
 
     axios
-      .post("http://localhost:5000/users", newUser)
+      .post("https://medicare-hub-server.onrender.com/users", newUser)
       .then((res) => {
         console.log(res.data);
         Swal.fire({
@@ -111,7 +110,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/login");
+        navigate("/userDashboard");
       })
       .catch((error) => {
         console.error("Error during signup:", error);
@@ -227,13 +226,7 @@ const Register = () => {
               <button className="btn btn-primary w-full">Register</button>
             </div>
           </form>
-          <div className="divider">OR</div>
-          <div className="form-control">
-            <button className="btn btn-outline w-full flex items-center justify-center">
-              <FcGoogle className="mr-2" />
-              Sign up with Google
-            </button>
-          </div>
+
           <p className="text-center text-sm">
             Already have an account?{" "}
             <a href="/login" className="text-blue-500 hover:underline">

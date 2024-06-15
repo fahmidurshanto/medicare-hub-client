@@ -8,6 +8,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import { getFirestore, doc, setDoc } from "firebase/firestore"; // Add Firestore imports
 import auth from "../firebase/firebase.config";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const db = getFirestore(); // Initialize Firestore
+  const axiosPublic = useAxiosPublic();
 
   // user creation with email and password function
   const signUp = (email, password, additionalData) => {
@@ -54,6 +56,18 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(`Current user:  ${currentUser?.email}`);
       setUser(currentUser);
+      if (currentUser) {
+        // store client
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        //
+        localStorage.removeItem("access-token");
+      }
       setLoading(false);
       return () => {
         unsubscribe();

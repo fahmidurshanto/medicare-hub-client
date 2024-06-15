@@ -11,14 +11,14 @@ const UserDetails = () => {
       <p className="font-bold">
         User Id: <span className="font-light">{_id}</span>
       </p>
-      <h3 className="text-2xl">{userDetails?.name}</h3>
-      <img src={userDetails?.avatar} alt="Avatar" />
+      <h3 className="text-2xl">{name}</h3>
+      <img src={avatar} alt="Avatar" />
       <p>Blood group: {bloodGroup}</p>
-      <p>Status: {userDetails.status}</p>
+      <p>Status: {status}</p>
       <address>
         <p className="font-bold">Address:</p>
-        <p>District: {userDetails?.district}</p>
-        <p>Upazila: {userDetails?.upazila}</p>
+        <p>District: {district}</p>
+        <p>Upazila: {upazila}</p>
       </address>
     </div>
   );
