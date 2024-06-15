@@ -1,34 +1,31 @@
-import Profile from "../components/Profile";
-import Appointments from "../components/Appointments";
-import TestResults from "../components/TestResults";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
-const UserDashboard = () => {
+import AllUsers from "./AllUsers";
+
+const AdminDashboard = () => {
   return (
     <div>
       <div className="min-h-screen flex">
         <nav className="w-full   flex flex-col p-4">
-          <h2 className="text-xl mb-4">User Dashboard</h2>
+          <h2 className="text-xl mb-4">Admin Dashboard</h2>
 
           <Tabs className="flex items-center gap-10">
             <TabList className="flex flex-col">
               <Tab className="btn btn-primary mb-2">My Profile</Tab>
-              <Tab className="btn btn-primary mb-2">
-                My Upcoming Appointments
-              </Tab>
+
+              <Tab className="btn btn-primary mb-2">All Users</Tab>
               <Tab className="btn btn-primary mb-2">Test Results</Tab>
             </TabList>
 
             <div className="flex-grow">
               <TabPanel>
-                <Profile></Profile>
+                <div className="text-4xl">Admin Profile</div>
               </TabPanel>
               <TabPanel>
-                <Appointments></Appointments>
+                <AllUsers></AllUsers>
               </TabPanel>
               <TabPanel>
-                <TestResults></TestResults>
+                <h3 className="text-3xl">Other things</h3>
               </TabPanel>
             </div>
           </Tabs>
@@ -38,4 +35,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default AdminDashboard;

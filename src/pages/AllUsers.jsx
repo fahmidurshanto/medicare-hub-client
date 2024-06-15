@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -11,8 +12,8 @@ const AllUsers = () => {
   }, []);
   console.log(users);
   return (
-    <div>
-      <h2>Available Users: {users.length}</h2>
+    <div className="m-10">
+      <h2 className="text-4xl">All Users: {users.length}</h2>
       <div className="grid grid-cols-3 gap-7">
         {users.map((user) => (
           <div
@@ -22,21 +23,24 @@ const AllUsers = () => {
             <div className="flex items-center space-x-4">
               <div>
                 <h2 className="card-title text-xl font-semibold">
-                  {user.name}
+                  {user?.name}
                 </h2>
-                <p className="text-gray-500">{user.email}</p>
-                <p className="text-gray-500">Blood Group: {user.bloodGroup}</p>
+                <p className="text-gray-500">{user?.email}</p>
+                <p className="text-gray-500">Blood Group: {user?.bloodGroup}</p>
               </div>
             </div>
             <div className="mt-4">
               <p className="text-gray-700">
-                <span className="font-bold">District:</span> {user.district}
+                <span className="font-bold">District:</span> {user?.district}
               </p>
               <p className="text-gray-700">
-                <span className="font-bold">Upazila:</span> {user.upazila}
+                <span className="font-bold">Upazila:</span> {user?.upazila}
               </p>
             </div>
-            <button className="btn btn-info mt-4">See info</button>
+            <Link to={`/allUsers/${user._id}`} className="btn btn-info mt-4">
+              See info
+            </Link>
+            <button className="btn btn-secondary mt-4">Delete</button>
           </div>
         ))}
       </div>

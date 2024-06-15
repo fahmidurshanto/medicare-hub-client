@@ -18,10 +18,15 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </li>
             {user && (
-              <li>
-                <Link to="/userDashboard">Dashboard</Link>
-              </li>
+              <div>
+                <li>
+                  <Link to="/userDashboard">Dashboard</Link>
+                </li>
+              </div>
             )}
+            <li>
+              <Link to="/adminDashboard">Admin Dashboard</Link>
+            </li>
           </ul>
         </details>
         <a className="btn btn-ghost text-xl font-bold">MediCare HUB</a>
@@ -32,12 +37,14 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           {user && (
-            <li>
-              <Link to="/userDashboard">Dashboard</Link>
-            </li>
+            <div>
+              <li>
+                <Link to="/userDashboard">Dashboard</Link>
+              </li>
+            </div>
           )}
           <li>
-            <a>Item 3</a>
+            <Link to="/adminDashboard">Admin Dashboard</Link>
           </li>
         </ul>
       </div>

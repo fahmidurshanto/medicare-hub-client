@@ -8,6 +8,8 @@ import Appointments from "../components/Appointments";
 import TestResults from "../components/TestResults";
 import Home from "../pages/Home";
 import PrivateRoute from "./PrivateRoute";
+import AdminDashboard from "../pages/AdminDashboard";
+import UserDetails from "../components/UserDetails";
 
 const Router = createBrowserRouter([
   {
@@ -35,6 +37,10 @@ const Router = createBrowserRouter([
         ),
       },
       {
+        path: "/adminDashboard",
+        element: <AdminDashboard></AdminDashboard>,
+      },
+      {
         path: "/profile",
         element: <Profile></Profile>,
       },
@@ -45,6 +51,12 @@ const Router = createBrowserRouter([
       {
         path: "/results",
         element: <TestResults></TestResults>,
+      },
+      {
+        path: "/allUsers/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/users/${params.id}`),
+        element: <UserDetails></UserDetails>,
       },
     ],
   },
