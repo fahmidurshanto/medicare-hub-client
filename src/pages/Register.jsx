@@ -8,15 +8,14 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const { signUp, loading } = useContext(AuthContext);
   const [avatar, setAvatar] = useState("");
-  const [districts, setDistricts] = useState("");
-  const [upazilas, setUpazilas] = useState("");
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
 
-  //   districts data fetching by axios
+  // districts data fetching by axios
   useEffect(() => {
     axios
       .get("http://localhost:5000/districts")
       .then((res) => {
-        console.log(res.data);
         setDistricts(res.data);
       })
       .catch((error) => {
@@ -24,12 +23,11 @@ const Register = () => {
       });
   }, []);
 
-  //   upazilas data fetching by axios
+  // upazilas data fetching by axios
   useEffect(() => {
     axios
       .get("http://localhost:5000/upazilas")
       .then((res) => {
-        console.log(res.data);
         setUpazilas(res.data);
       })
       .catch((error) => {
@@ -39,7 +37,7 @@ const Register = () => {
 
   const handleImageUpload = (e) => {
     const imageData = new FormData();
-    imageData.set("key", "YOUR_IMAGEBB_API_KEY");
+    imageData.set("key", "ebc8e8779676d69b4a0f03efe9e939c2");
     imageData.append("image", e.target.files[0]);
 
     axios
@@ -79,22 +77,17 @@ const Register = () => {
       upazila,
       password,
     };
-    signUp(email, password)
+
+    signUp(email, password, newUser)
       .then(() => {
-        axios
-          .post("http://localhost:5000/register", newUser)
-          .then((response) => {
-            console.log(response.data);
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Registration successful",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigate("/login");
-          })
-          .catch((error) => console.error(error));
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registration successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/login");
       })
       .catch((error) => {
         console.error("Error during signup:", error);
@@ -178,7 +171,7 @@ const Register = () => {
               <label className="label">
                 <span className="label-text">Upazila</span>
               </label>
-              <select name="district" className="select select-bordered w-full">
+              <select name="upazila" className="select select-bordered w-full">
                 {upazilas.map((upazila) => (
                   <option key={upazila._id}>{upazila?.name}</option>
                 ))}
