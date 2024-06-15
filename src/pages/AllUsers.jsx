@@ -11,6 +11,25 @@ const AllUsers = () => {
       .catch((error) => console.log(error.message));
   }, []);
   console.log(users);
+
+  const handleBlockUser = (userId) => {
+    axios
+      .patch(`http://localhost:5000/users/${userId}`, { status: "blocked" })
+      .then((response) => {
+        if (response.status === 200) {
+          // Update user data locally for immediate UI feedback
+          setUsers((prevUsers) =>
+            prevUsers.map((user) =>
+              user._id === userId ? { ...user, status: "blocked" } : user
+            )
+          );
+          console.success("User blocked successfully!");
+        } else {
+          console.error("Failed to block user:", response.data);
+        }
+      })
+      .catch((error) => console.error("Error blocking user:", error));
+  };
   return (
     <div className="m-10">
       <h2 className="text-4xl">All Users: {users.length}</h2>
@@ -41,6 +60,15 @@ const AllUsers = () => {
               See info
             </Link>
             <button className="btn btn-secondary mt-4">Delete</button>
+            <button
+              className={`btn btn-warning mt-4 ${
+                user.status === "blocked" ? "disabled" : ""
+              }`}
+              onClick={() => handleBlockUser(user._id)}
+              disabled={user.status === "blocked"}
+            >
+              {user.status === "blocked" ? "Blocked" : "Block"}
+            </button>
           </div>
         ))}
       </div>
