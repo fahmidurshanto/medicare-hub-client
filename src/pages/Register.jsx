@@ -77,6 +77,30 @@ const Register = () => {
       upazila,
       password,
     };
+    console.log(newUser);
+
+    axios
+      .post("http://localhost:5000/users", newUser)
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title:
+            "Your account data has been stored in the database successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/userDashboard");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          text: "Something went wrong!",
+        });
+      });
 
     signUp(email, password, newUser)
       .then(() => {

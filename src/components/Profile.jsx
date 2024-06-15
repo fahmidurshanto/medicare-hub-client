@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "(123) 456-7890",
-    address: "123 Main St, City, State",
-    dob: "1990-01-01",
+    name: user?.displayName,
+    email: user?.email,
+    phone: user?.phoneNumber || "Not provided",
   });
+
+  console.log(user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,15 +35,7 @@ const Profile = () => {
           <p>
             <strong>Email:</strong> {profile.email}
           </p>
-          <p>
-            <strong>Phone:</strong> {profile.phone}
-          </p>
-          <p>
-            <strong>Address:</strong> {profile.address}
-          </p>
-          <p>
-            <strong>Date of Birth:</strong> {profile.dob}
-          </p>
+
           <button className="btn btn-primary mt-4" onClick={handleEdit}>
             Edit Profile
           </button>

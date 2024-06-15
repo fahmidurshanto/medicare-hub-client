@@ -1,7 +1,9 @@
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -16,12 +18,19 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const db = getFirestore(); // Initialize Firestore
 
+  // google sign in function
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    setLoading(true);
+    return signInWithPopup(auth, provider);
+  };
+
   // user creation with email and password function
   const signUp = (email, password, additionalData) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password).then(
-      (data) => {
-        const user = data.user;
+      (userCredential) => {
+        const user = userCredential.user;
         return updateProfile(user, {
           displayName: additionalData.name,
           photoURL: additionalData.avatar,
@@ -68,6 +77,7 @@ const AuthProvider = ({ children }) => {
     signUp,
     login,
     logout,
+    googleSignIn,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
